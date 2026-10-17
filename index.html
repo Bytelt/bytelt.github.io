@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bytelt Team — Build and Play!</title>
+
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Bytelt Team builds high-performance technology for MCPE communities — NexusSky, GawnPvP, CMTIERS, and PocketMine infrastructure.">
+    <meta name="keywords" content="MCPE, MCPE 0.15.10, MCPE PvP, Minecraft Pocket Edition, MCPE 0.14.3, PocketMine-MP, Genisys, Sol's RNG MCPE, CMTIERS, GawnPvP, NexusSky, Bytelt Team, yPoTATO, VexServin">
+    <meta name="author" content="yPoTATO">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Bytelt Team — Build and Play!">
+    <meta property="og:description" content="Minecraft PE technology, server infrastructure, and gaming ecosystems.">
+    <meta property="og:image" content="https://aboutnexus.github.io/nexus-icon.png">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            950: '#04070f',
+                            900: '#090d16',
+                            850: '#0d1320',
+                            800: '#121929',
+                            750: '#182235',
+                            700: '#1e2b42',
+                        },
+                        brand: {
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            400: '#818cf8',
+                        }
+                    },
+                    boxShadow: {
+                        'glow-indigo': '0 0 35px -5px rgba(99, 102, 241, 0.4)',
+                        'glow-emerald': '0 0 35px -5px rgba(16, 185, 129, 0.4)',
+                        'glow-amber': '0 0 35px -5px rgba(245, 158, 11, 0.4)',
+                        'glow-purple': '0 0 35px -5px rgba(168, 85, 247, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="top" class="bg-dark-950 text-gray-100 font-sans antialiased relative selection:bg-brand-500 selection:text-white overflow-x-hidden">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- Enhanced Aurora Mesh Background Canvas -->
+    <canvas id="live-bg" class="fixed inset-0 pointer-events-none z-0 opacity-80"></canvas>
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-indigo-950/90 via-purple-950/90 to-dark-950 text-xs text-indigo-200 py-2.5 px-4 text-center border-b border-indigo-500/20 relative z-50 flex items-center justify-center gap-2">
+        <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold uppercase text-[10px] tracking-wider border border-emerald-500/30">ONLINE</span>
+        <span>GawnPvP Live Server (EU): <code class="bg-dark-950 px-1.5 py-0.5 rounded text-indigo-300 font-mono">GawnPvP.sytes.net:3224</code></span>
+        <button onclick="copyToClipboard('GawnPvP.sytes.net:3224', 'GawnPvP Address')" class="ml-2 hover:text-white transition" title="Copy IP"><i class="fa-regular fa-copy"></i></button>
+    </div>
+
+    <!-- Fixed Glassmorphic Navigation Bar -->
+    <nav class="fixed top-9 left-0 right-0 z-40 bg-dark-950/80 backdrop-blur-2xl border-b border-gray-800/80 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#top" class="flex items-center gap-3.5 font-extrabold text-2xl tracking-wide scroll-link group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 flex items-center justify-center shadow-glow-indigo group-hover:scale-105 transition-all">
+                    <img src="https://aboutnexus.github.io/nexus-icon.png" alt="Bytelt Logo" class="w-7 h-7 object-contain">
+                </div>
+                <span class="text-white group-hover:text-indigo-300 transition-colors">Bytelt <span class="text-indigo-400 font-light">Team</span></span>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden lg:flex items-center gap-8 text-sm font-semibold text-gray-300">
+                <a href="#why" class="scroll-link hover:text-indigo-400 transition-colors">Why Bytelt</a>
+                <a href="#projects" class="scroll-link hover:text-indigo-400 transition-colors">Projects</a>
+                <a href="#technology" class="scroll-link hover:text-indigo-400 transition-colors">Technology</a>
+                <a href="#team" class="scroll-link hover:text-indigo-400 transition-colors">Team</a>
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="hidden sm:flex items-center gap-3">
+                <a href="https://discord.gg/aTeyHxWvxD" target="_blank" class="px-4 py-2.5 rounded-xl text-sm font-bold bg-indigo-600/10 text-indigo-400 border border-indigo-500/30 hover:bg-indigo-600 hover:text-white transition shadow-sm hover:shadow-glow-indigo">
+                    <i class="fa-brands fa-discord"></i> Bytelt DC
+                </a>
+                <a href="https://discord.gg/ThhJMD8htW" target="_blank" class="px-4 py-2.5 rounded-xl text-sm font-bold bg-purple-600/10 text-purple-400 border border-purple-500/30 hover:bg-purple-600 hover:text-white transition shadow-sm">
+                    <i class="fa-brands fa-discord"></i> Nexus Community
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <div class="lg:hidden flex items-center">
+                <button id="mobile-menu-btn" class="p-2.5 text-gray-400 hover:text-white rounded-2xl bg-dark-900 border border-gray-800" aria-label="Toggle Navigation">
+                    <i id="menu-icon" class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-drawer" class="hidden lg:hidden bg-dark-900/95 backdrop-blur-2xl border-b border-gray-800 px-6 pt-4 pb-8 space-y-4">
+            <a href="#why" class="scroll-link block py-3 text-base font-semibold text-gray-200 border-b border-gray-800/60">Why Bytelt</a>
+            <a href="#projects" class="scroll-link block py-3 text-base font-semibold text-gray-200 border-b border-gray-800/60">Projects</a>
+            <a href="#technology" class="scroll-link block py-3 text-base font-semibold text-gray-200 border-b border-gray-800/60">Technology</a>
+            <a href="#team" class="scroll-link block py-3 text-base font-semibold text-gray-200 border-b border-gray-800/60">Team</a>
+            <div class="pt-4 flex flex-col gap-3">
+                <a href="https://discord.gg/aTeyHxWvxD" target="_blank" class="w-full text-center py-3 rounded-xl font-bold bg-indigo-600 text-white shadow-glow-indigo flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-discord"></i> Bytelt Discord
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="relative z-10">
+
+        <!-- Hero Section -->
+        <header class="relative pt-40 pb-24 md:pt-56 md:pb-36 border-b border-gray-800/60 reveal">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-bold tracking-wider uppercase shadow-glow-indigo">
+                            <span class="w-2.5 h-2.5 rounded-full bg-indigo-400 animate-pulse"></span> Minecraft PE technology &amp; community
+                        </div>
+                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-none">
+                            Build and <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">Play!</span>
+                        </h1>
+                        <p class="text-lg sm:text-xl text-gray-400 max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                            Bytelt Team builds the technology behind Minecraft PE communities, from original games and PocketMine systems to the servers and communities players call home.
+                        </p>
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                            <a href="#projects" class="scroll-link px-8 py-4 rounded-2xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white transition-all shadow-glow-indigo">
+                                Explore projects →
+                            </a>
+                            <a href="#why" class="scroll-link px-8 py-4 rounded-2xl font-bold bg-dark-900 hover:bg-dark-800 text-gray-200 border border-gray-700/80 transition-all">
+                                Why Bytelt?
+                            </a>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-gray-800/80 text-xs sm:text-sm font-semibold text-gray-300">
+                            <div class="flex items-center justify-center lg:justify-start gap-2"><i class="fa-solid fa-check text-indigo-400"></i> Custom game dev</div>
+                            <div class="flex items-center justify-center lg:justify-start gap-2"><i class="fa-solid fa-check text-indigo-400"></i> Server technology</div>
+                            <div class="flex items-center justify-center lg:justify-start gap-2"><i class="fa-solid fa-check text-indigo-400"></i> Community operations</div>
+                        </div>
+                    </div>
+
+                    <!-- Right Quick Stats Box -->
+                    <div class="lg:col-span-5">
+                        <div class="relative rounded-3xl border border-gray-800 bg-gradient-to-b from-dark-900/90 to-dark-950/95 p-6 sm:p-8 space-y-6 shadow-2xl backdrop-blur-xl">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-5 rounded-2xl bg-dark-950 border border-gray-800">
+                                    <div class="text-3xl font-black text-white">MCPE</div>
+                                    <div class="text-xs text-gray-400 mt-1">Core platform</div>
+                                </div>
+                                <div class="p-5 rounded-2xl bg-dark-950 border border-gray-800">
+                                    <div class="text-3xl font-black text-white">4</div>
+                                    <div class="text-xs text-gray-400 mt-1">Ecosystem Projects</div>
+                                </div>
+                                <div class="p-5 rounded-2xl bg-dark-950 border border-gray-800">
+                                    <div class="text-3xl font-black text-white">0.15.10</div>
+                                    <div class="text-xs text-gray-400 mt-1">Main version</div>
+                                </div>
+                                <div class="p-5 rounded-2xl bg-dark-950 border border-gray-800">
+                                    <div class="text-3xl font-black text-white">2026</div>
+                                    <div class="text-xs text-gray-400 mt-1">Current team era</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Why Bytelt Section -->
+        <section id="why" class="py-24 border-b border-gray-800/60 reveal">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                    <div>
+                        <span class="text-indigo-400 text-xs font-bold uppercase tracking-widest">Why Bytelt</span>
+                        <h2 class="text-3xl sm:text-5xl font-black mt-2">Built around the whole stack.</h2>
+                    </div>
+                    <p class="text-gray-400 max-w-md text-sm leading-relaxed">
+                        Our work crosses the player experience, game logic and the server engineering behind it.
+                    </p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="p-8 rounded-3xl bg-dark-900/80 border border-gray-800 space-y-4 hover:border-indigo-500/40 transition">
+                        <span class="text-xs font-mono text-indigo-400 font-bold">01 / Engineering</span>
+                        <h3 class="text-xl font-bold text-white">Server technology that gets out of the way.</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Custom plugins, protocols, commands, permissions and APIs designed for our projects.</p>
+                    </div>
+                    <div class="p-8 rounded-3xl bg-dark-900/80 border border-gray-800 space-y-4 hover:border-indigo-500/40 transition">
+                        <span class="text-xs font-mono text-gray-500 font-bold">02</span>
+                        <h3 class="text-xl font-bold text-white">Game development</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Original games and player experiences designed around Minecraft PE.</p>
+                    </div>
+                    <div class="p-8 rounded-3xl bg-dark-900/80 border border-gray-800 space-y-4 hover:border-indigo-500/40 transition">
+                        <span class="text-xs font-mono text-gray-500 font-bold">03</span>
+                        <h3 class="text-xl font-bold text-white">Community</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Staff management, marketing and player-facing operations across every project.</p>
+                    </div>
+                    <div class="p-8 rounded-3xl bg-dark-900/80 border border-gray-800 space-y-4 hover:border-indigo-500/40 transition">
+                        <span class="text-xs font-mono text-indigo-400 font-bold">04</span>
+                        <h3 class="text-xl font-bold text-white">Nexus Technology</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Reusable internal technology that helps projects ship faster and stay maintainable.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ecosystem Projects Section -->
+        <section id="projects" class="py-24 border-b border-gray-800/60 reveal">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                    <div>
+                        <span class="text-indigo-400 text-xs font-bold uppercase tracking-widest">Our Ecosystem</span>
+                        <h2 class="text-3xl sm:text-5xl font-black mt-2">Everything you need to play.</h2>
+                    </div>
+                    <p class="text-gray-400 max-w-md text-sm leading-relaxed">
+                        Four projects, from PvP and Sol's RNG to tierlists and a community hub for all of them.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- 1. NexusSky (UNDER MAINTENANCE) -->
+                    <article class="bg-dark-900/80 border border-gray-800 rounded-3xl p-6 flex flex-col justify-between space-y-6 hover:border-amber-500/50 hover:shadow-glow-amber transition duration-300 group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-bold tracking-wider uppercase border border-amber-500/30">Under maintenance</span>
+                            </div>
+                            <div class="relative rounded-2xl overflow-hidden bg-dark-950 border border-gray-800 h-32 flex items-center justify-center p-2">
+                                <img src="https://aboutnexus.github.io/nexussky.png" alt="NexusSky" class="max-h-full object-contain group-hover:scale-105 transition duration-300" onerror="this.onerror=null; this.src='image.png';">
+                            </div>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-amber-400 transition">NexusSky</h3>
+                            <p class="text-gray-400 text-xs leading-relaxed">
+                                The best custom Roblox Sol's RNG and PvE experience inside of MCPE 0.15.10.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between text-xs font-semibold">
+                            <span class="text-gray-400">Version 0.15.10</span>
+                            <a href="https://discord.gg/YVt48YDNPY" target="_blank" class="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">Join Discord →</a>
+                        </div>
+                    </article>
+
+                    <!-- 2. GawnPvP -->
+                    <article class="bg-dark-900/80 border border-gray-800 rounded-3xl p-6 flex flex-col justify-between space-y-6 hover:border-emerald-500/50 hover:shadow-glow-emerald transition duration-300 group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 text-[10px] font-bold tracking-wider uppercase border border-emerald-500/30 flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Live project
+                                </span>
+                                <img src="https://aboutnexus.github.io/gawnpvp.png" alt="GawnPvP Logo" class="w-8 h-8 object-contain">
+                            </div>
+                            <div class="p-3 bg-dark-950 rounded-2xl border border-gray-800 font-mono text-xs space-y-1">
+                                <div class="text-gray-300"><span class="text-indigo-400 font-bold">IP:</span> GawnPvP.sytes.net</div>
+                                <div class="text-gray-300"><span class="text-indigo-400 font-bold">Port:</span> 3224 (🇪🇺 Europe)</div>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-emerald-400 transition">GawnPvP</h3>
+                            <p class="text-gray-400 text-xs leading-relaxed">
+                                The best experience for PvP, developed by erynn. Supports multiple versions: 0.15.10 and 0.14.3.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between text-xs font-semibold">
+                            <span class="text-gray-400">Developed by erynn</span>
+                            <a href="https://discord.gg/b3jqWG85Uu" target="_blank" class="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">Join Discord →</a>
+                        </div>
+                    </article>
+
+                    <!-- 3. CMTIERS -->
+                    <article class="bg-dark-900/80 border border-gray-800 rounded-3xl p-6 flex flex-col justify-between space-y-6 hover:border-amber-500/50 hover:shadow-glow-amber transition duration-300 group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-md bg-blue-500/20 text-blue-300 text-[10px] font-bold tracking-wider uppercase border border-blue-500/30">In development</span>
+                                <i class="fa-solid fa-trophy text-amber-400 text-xl"></i>
+                            </div>
+                            <div class="h-32 rounded-2xl bg-dark-950/50 p-4 border border-gray-800 flex flex-col justify-center items-center text-center">
+                                <span class="text-xs font-bold text-amber-400">CMTIERS</span>
+                                <span class="text-[10px] text-gray-400 mt-1">cmtiers.github.io</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-amber-400 transition">CMTIERS</h3>
+                            <p class="text-gray-400 text-xs leading-relaxed">
+                                A competitive MCPE PvP tier ranking system and leaderboard platform showcasing player rankings.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between text-xs font-semibold">
+                            <a href="https://cmtiers.github.io/" target="_blank" class="text-amber-400 hover:underline">Preview Site →</a>
+                            <a href="https://discord.gg/aTeyHxWvxD" target="_blank" class="text-indigo-400 hover:text-indigo-300">Join Discord →</a>
+                        </div>
+                    </article>
+
+                    <!-- 4. Nexus Community -->
+                    <article class="bg-dark-900/80 border border-gray-800 rounded-3xl p-6 flex flex-col justify-between space-y-6 hover:border-purple-500/50 hover:shadow-glow-purple transition duration-300 group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 text-[10px] font-bold tracking-wider uppercase border border-purple-500/30">Active</span>
+                                <img src="https://aboutnexus.github.io/nexus-icon.png" alt="Nexus Icon" class="w-8 h-8 object-contain">
+                            </div>
+                            <div class="relative rounded-2xl overflow-hidden bg-dark-950 border border-gray-800 h-32 flex items-center justify-center p-2">
+                                <img src="https://aboutnexus.github.io/nexus-wordmark.png" alt="Nexus Wordmark" class="max-h-full object-contain group-hover:scale-105 transition duration-300">
+                            </div>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-purple-400 transition">Nexus Community</h3>
+                            <p class="text-gray-400 text-xs leading-relaxed">
+                                The home of every Nexus player. Get news, find support and meet people from all our servers.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-gray-800 flex items-center justify-between text-xs font-semibold">
+                            <span class="text-gray-400">Community hub</span>
+                            <a href="https://discord.gg/nHThahjVJG" target="_blank" class="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">Join Discord →</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Section -->
+        <section id="technology" class="py-24 border-b border-gray-800/60 reveal">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-gradient-to-r from-dark-900 via-dark-900 to-indigo-950/70 p-8 sm:p-12 rounded-3xl border border-gray-800 space-y-6 shadow-2xl">
+                    <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Nexus Technology</span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-white">Technology, built in-house.</h2>
+                    <p class="text-gray-300 text-sm max-w-2xl leading-relaxed">
+                        Everything our servers run on is made by the team, for the community. Custom plugins, protocols, APIs, commands and server systems built by the team.
+                    </p>
+                    <div class="grid sm:grid-cols-3 gap-4 pt-4 border-t border-gray-800/80 text-xs font-semibold text-gray-300">
+                        <div class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-400"></i> Custom plugins &amp; commands</div>
+                        <div class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-400"></i> Protocol &amp; multi-version support</div>
+                        <div class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-400"></i> APIs &amp; shared server systems</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leadership / Team Section -->
+        <section id="team" class="py-24 border-b border-gray-800/60 reveal">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-2">
+                    <span class="text-indigo-400 text-xs font-bold uppercase tracking-widest">The team</span>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white">People behind the projects.</h2>
+                    <p class="text-gray-400 text-sm">Nexus Community brings together creators, developers, and server owners.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <!-- 1. VexServin Card -->
+                    <div class="bg-dark-900 p-8 sm:p-10 rounded-3xl border border-gray-800 flex flex-col sm:flex-row items-center gap-8 shadow-xl">
+                        <img src="https://aboutnexus.github.io/vexservin.jpg" alt="VexServin Avatar" class="w-28 h-28 rounded-2xl border-2 border-indigo-500 object-cover shadow-lg flex-shrink-0" onerror="this.onerror=null; this.src='23835.jpg';">
+                        <div class="space-y-3 text-center sm:text-left">
+                            <h3 class="text-3xl font-black text-white">VexServin</h3>
+                            <div class="text-xs text-indigo-400 font-semibold tracking-wide">Founder · Developer · Marketing · Staff</div>
+                            <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                                Founder of NexusSky and a core developer of the Nexus Community ecosystem. Builds custom server systems, leads marketing and manages staff across NexusSky, GawnPvP, CMTIERS and Nexus Community.
+                            </p>
+                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1 text-[10px] font-bold text-gray-300">
+                                <span class="px-2.5 py-1 rounded-md bg-dark-950 border border-gray-800">Founder</span>
+                                <span class="px-2.5 py-1 rounded-md bg-dark-950 border border-gray-800">Developer</span>
+                                <span class="px-2.5 py-1 rounded-md bg-dark-950 border border-gray-800">Marketing</span>
+                                <span class="px-2.5 py-1 rounded-md bg-dark-950 border border-gray-800">Staff</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. yPoTATO Card -->
+                    <div class="bg-dark-900 p-8 sm:p-10 rounded-3xl border border-gray-800 flex flex-col sm:flex-row items-center gap-8 shadow-xl">
+                        <div class="w-28 h-28 rounded-2xl border-2 border-purple-500 bg-gradient-to-br from-purple-900/40 to-dark-950 flex items-center justify-center shadow-lg flex-shrink-0">
+                            <i class="fa-solid fa-potato text-5xl text-purple-400"></i>
+                        </div>
+                        <div class="space-y-3 text-center sm:text-left">
+                            <h3 class="text-3xl font-black text-white">yPoTATO</h3>
+                            <div class="text-xs text-purple-400 font-semibold tracking-wide">Content Creator · Community Developer</div>
+                            <p class="text-gray-300 text-sm font-semibold tracking-wide leading-relaxed">
+                                gu gu ga ga
+                            </p>
+                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1 text-[10px] font-bold text-gray-300">
+                                <span class="px-2.5 py-1 rounded-md bg-dark-950 border border-gray-800">Creator</span>
+                                <span class="px-2.5 py-1 rounded-md bg-dark-950 border border-gray-800">MCPE PvP</span>
+                                <span class="px-2.5 py-1 rounded-md bg-dark-950 border border-gray-800">Bytelt</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call To Action -->
+        <section class="py-24 border-b border-gray-800/60 reveal">
+            <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
+                <span class="text-indigo-400 text-xs font-bold uppercase tracking-widest">Ready to explore?</span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white">See what we're building.</h2>
+                <p class="text-gray-400 text-sm max-w-lg mx-auto">
+                    Jump into GawnPvP, follow NexusSky and CMTIERS, or meet the team in Nexus Community.
+                </p>
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+                    <a href="https://discord.gg/b3jqWG85Uu" target="_blank" class="px-8 py-3.5 rounded-xl font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition shadow-lg shadow-indigo-600/30">Play GawnPvP →</a>
+                    <a href="https://discord.gg/nHThahjVJG" target="_blank" class="px-8 py-3.5 rounded-xl font-bold bg-dark-900 hover:bg-dark-800 text-gray-200 border border-gray-700 transition">Join Nexus Community</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-dark-950 text-gray-400 text-sm py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="space-y-4 md:col-span-1">
+                    <a href="#top" class="flex items-center gap-3 font-bold text-xl text-white scroll-link">
+                        <img src="https://aboutnexus.github.io/nexus-icon.png" alt="Bytelt Icon" class="w-8 h-8 object-contain">
+                        <span>Bytelt Team</span>
+                    </a>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Minecraft development, game technology and communities built by an independent team.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-xs tracking-widest uppercase">Projects</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="https://discord.gg/YVt48YDNPY" target="_blank" class="hover:text-white transition">NexusSky</a></li>
+                        <li><a href="https://discord.gg/b3jqWG85Uu" target="_blank" class="hover:text-white transition">GawnPvP</a></li>
+                        <li><a href="https://cmtiers.github.io/" target="_blank" class="hover:text-white transition">CMTIERS</a></li>
+                        <li><a href="https://discord.gg/nHThahjVJG" target="_blank" class="hover:text-white transition">Nexus Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-xs tracking-widest uppercase">Company</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#team" class="scroll-link hover:text-white transition">Team</a></li>
+                        <li><a href="#why" class="scroll-link hover:text-white transition">Why Bytelt</a></li>
+                        <li><a href="#technology" class="scroll-link hover:text-white transition">Technology</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-xs tracking-widest uppercase">Community</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="https://discord.gg/nHThahjVJG" target="_blank" class="hover:text-white transition">Discord</a></li>
+                        <li><a href="https://discord.gg/YVt48YDNPY" target="_blank" class="hover:text-white transition">NexusSky</a></li>
+                        <li><a href="https://discord.gg/b3jqWG85Uu" target="_blank" class="hover:text-white transition">GawnPvP</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-gray-800/80 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                <span>© 2026 Bytelt Team. Author: yPoTATO. All rights reserved.</span>
+                <span>Minecraft is a trademark of Mojang Studios. Bytelt Team is not affiliated with Mojang or Microsoft.</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Custom Script File -->
+    <script src="script.js"></script>
+</body>
+</html>
